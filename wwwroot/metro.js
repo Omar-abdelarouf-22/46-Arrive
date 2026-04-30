@@ -21,22 +21,17 @@ let currentUserCoords = null;
 
 const stationLayer = L.layerGroup().addTo(map);
 
-// Backend-ready API wrapper; replace this with fetch("/api/metro-stations") later.
 async function getMetroStations() {
-  return [
-    { name: "Helwan", lat: 29.8489, lng: 31.3342 },
-    { name: "Maadi", lat: 29.9602, lng: 31.2576 },
-    { name: "Sadat", lat: 30.0444, lng: 31.2358 },
-    { name: "Nasser", lat: 30.0535, lng: 31.2387 },
-    { name: "Al Shohadaa", lat: 30.0610, lng: 31.2460 },
-    { name: "Attaba", lat: 30.0523, lng: 31.2468 },
-    { name: "Cairo University", lat: 30.0260, lng: 31.2013 },
-    { name: "Dokki", lat: 30.0385, lng: 31.2121 },
-    { name: "Opera", lat: 30.0419, lng: 31.2249 },
-    { name: "Abbassia", lat: 30.0735, lng: 31.2831 },
-    { name: "Haroun", lat: 30.1015, lng: 31.3331 },
-    { name: "El Marg", lat: 30.1521, lng: 31.3384 }
-  ];
+  try {
+    const response = await fetch("/api/metrostations");
+    if (!response.ok) {
+      throw new Error("Could not fetch metro stations");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching metro stations:", error);
+    return [];
+  }
 }
 
 const knownPlaces = {

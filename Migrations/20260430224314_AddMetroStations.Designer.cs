@@ -3,6 +3,7 @@ using Arrive.BusApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Arrive.BusApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260430224314_AddMetroStations")]
+    partial class AddMetroStations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,520 +117,86 @@ namespace Arrive.BusApi.Migrations
                         new
                         {
                             Id = 1,
-                            Latitude = 29.8491,
-                            Longitude = 31.334099999999999,
+                            Latitude = 29.8489,
+                            Longitude = 31.334199999999999,
                             Name = "Helwan"
                         },
                         new
                         {
                             Id = 2,
-                            Latitude = 29.864100000000001,
-                            Longitude = 31.3323,
-                            Name = "Ain Helwan"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Latitude = 29.8706,
-                            Longitude = 31.328299999999999,
-                            Name = "Helwan University"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Latitude = 29.882100000000001,
-                            Longitude = 31.3218,
-                            Name = "Wadi Hof"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Latitude = 29.897200000000002,
-                            Longitude = 31.312899999999999,
-                            Name = "Hadayek Helwan"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Latitude = 29.907900000000001,
-                            Longitude = 31.303899999999999,
-                            Name = "El-Maasara"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Latitude = 29.924800000000001,
-                            Longitude = 31.291699999999999,
-                            Name = "Tora El-Asmant"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Latitude = 29.936599999999999,
-                            Longitude = 31.282900000000001,
-                            Name = "Kozzika"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Latitude = 29.9482,
-                            Longitude = 31.274999999999999,
-                            Name = "Tora El-Balad"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Latitude = 29.954599999999999,
-                            Longitude = 31.265699999999999,
-                            Name = "Sakanat El-Maadi"
-                        },
-                        new
-                        {
-                            Id = 11,
                             Latitude = 29.9602,
-                            Longitude = 31.258500000000002,
+                            Longitude = 31.2576,
                             Name = "Maadi"
                         },
                         new
                         {
-                            Id = 12,
-                            Latitude = 29.972100000000001,
-                            Longitude = 31.250499999999999,
-                            Name = "Hadayek El-Maadi"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Latitude = 29.982199999999999,
-                            Longitude = 31.242999999999999,
-                            Name = "Dar El-Salam"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Latitude = 29.995899999999999,
-                            Longitude = 31.233499999999999,
-                            Name = "El-Zahraa"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Latitude = 30.0062,
-                            Longitude = 31.23,
-                            Name = "Mar Girgis"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Latitude = 30.017499999999998,
-                            Longitude = 31.229099999999999,
-                            Name = "El-Malek El-Saleh"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Latitude = 30.029599999999999,
-                            Longitude = 31.2332,
-                            Name = "Al-Sayeda Zeinab"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            Latitude = 30.035699999999999,
-                            Longitude = 31.236599999999999,
-                            Name = "Saad Zaghloul"
-                        },
-                        new
-                        {
-                            Id = 19,
+                            Id = 3,
                             Latitude = 30.0444,
                             Longitude = 31.235800000000001,
                             Name = "Sadat"
                         },
                         new
                         {
-                            Id = 20,
+                            Id = 4,
                             Latitude = 30.0535,
                             Longitude = 31.238700000000001,
                             Name = "Nasser"
                         },
                         new
                         {
-                            Id = 21,
-                            Latitude = 30.0579,
-                            Longitude = 31.242699999999999,
-                            Name = "Orabi"
-                        },
-                        new
-                        {
-                            Id = 22,
+                            Id = 5,
                             Latitude = 30.061,
                             Longitude = 31.245999999999999,
-                            Name = "Al-Shohadaa"
+                            Name = "Al Shohadaa"
                         },
                         new
                         {
-                            Id = 23,
-                            Latitude = 30.066400000000002,
-                            Longitude = 31.264399999999998,
-                            Name = "Ghamra"
-                        },
-                        new
-                        {
-                            Id = 24,
-                            Latitude = 30.0715,
-                            Longitude = 31.2727,
-                            Name = "El-Demerdash"
-                        },
-                        new
-                        {
-                            Id = 25,
-                            Latitude = 30.075900000000001,
-                            Longitude = 31.276599999999998,
-                            Name = "Manshiet El-Sadr"
-                        },
-                        new
-                        {
-                            Id = 26,
-                            Latitude = 30.081800000000001,
-                            Longitude = 31.284500000000001,
-                            Name = "Kobri El-Qobba"
-                        },
-                        new
-                        {
-                            Id = 27,
-                            Latitude = 30.0854,
-                            Longitude = 31.290500000000002,
-                            Name = "Hammamat El-Qobba"
-                        },
-                        new
-                        {
-                            Id = 28,
-                            Latitude = 30.0898,
-                            Longitude = 31.296500000000002,
-                            Name = "Saray El-Qobba"
-                        },
-                        new
-                        {
-                            Id = 29,
-                            Latitude = 30.098800000000001,
-                            Longitude = 31.306899999999999,
-                            Name = "Hadayek El-Zaitoun"
-                        },
-                        new
-                        {
-                            Id = 30,
-                            Latitude = 30.104399999999998,
-                            Longitude = 31.3125,
-                            Name = "Helmeyet El-Zaitoun"
-                        },
-                        new
-                        {
-                            Id = 31,
-                            Latitude = 30.114699999999999,
-                            Longitude = 31.318100000000001,
-                            Name = "El-Matareyya"
-                        },
-                        new
-                        {
-                            Id = 32,
-                            Latitude = 30.124300000000002,
-                            Longitude = 31.323499999999999,
-                            Name = "Ain Shams"
-                        },
-                        new
-                        {
-                            Id = 33,
-                            Latitude = 30.1387,
-                            Longitude = 31.328299999999999,
-                            Name = "Ezbet El-Nakhl"
-                        },
-                        new
-                        {
-                            Id = 34,
-                            Latitude = 30.152100000000001,
-                            Longitude = 31.3384,
-                            Name = "El-Marg"
-                        },
-                        new
-                        {
-                            Id = 35,
-                            Latitude = 30.1633,
-                            Longitude = 31.336400000000001,
-                            Name = "New El-Marg"
-                        },
-                        new
-                        {
-                            Id = 36,
-                            Latitude = 29.980599999999999,
-                            Longitude = 31.211400000000001,
-                            Name = "El-Mounib"
-                        },
-                        new
-                        {
-                            Id = 37,
-                            Latitude = 29.995799999999999,
-                            Longitude = 31.209800000000001,
-                            Name = "Sakiat Mekki"
-                        },
-                        new
-                        {
-                            Id = 38,
-                            Latitude = 30.005099999999999,
-                            Longitude = 31.2089,
-                            Name = "Omm El-Misryeen"
-                        },
-                        new
-                        {
-                            Id = 39,
-                            Latitude = 30.0137,
-                            Longitude = 31.207899999999999,
-                            Name = "Giza"
-                        },
-                        new
-                        {
-                            Id = 40,
-                            Latitude = 30.021000000000001,
-                            Longitude = 31.204499999999999,
-                            Name = "Faisal"
-                        },
-                        new
-                        {
-                            Id = 41,
-                            Latitude = 30.026,
-                            Longitude = 31.2013,
-                            Name = "Cairo University"
-                        },
-                        new
-                        {
-                            Id = 42,
-                            Latitude = 30.035499999999999,
-                            Longitude = 31.200099999999999,
-                            Name = "El-Bohouth"
-                        },
-                        new
-                        {
-                            Id = 43,
-                            Latitude = 30.038499999999999,
-                            Longitude = 31.2121,
-                            Name = "Dokki"
-                        },
-                        new
-                        {
-                            Id = 44,
-                            Latitude = 30.041899999999998,
-                            Longitude = 31.224900000000002,
-                            Name = "Opera"
-                        },
-                        new
-                        {
-                            Id = 45,
-                            Latitude = 30.0443,
-                            Longitude = 31.244299999999999,
-                            Name = "Mohamed Naguib"
-                        },
-                        new
-                        {
-                            Id = 46,
+                            Id = 6,
                             Latitude = 30.052299999999999,
                             Longitude = 31.2468,
                             Name = "Attaba"
                         },
                         new
                         {
-                            Id = 47,
-                            Latitude = 30.070900000000002,
-                            Longitude = 31.245200000000001,
-                            Name = "Massara"
+                            Id = 7,
+                            Latitude = 30.026,
+                            Longitude = 31.2013,
+                            Name = "Cairo University"
                         },
                         new
                         {
-                            Id = 48,
-                            Latitude = 30.081399999999999,
-                            Longitude = 31.246400000000001,
-                            Name = "Rod El-Farag"
+                            Id = 8,
+                            Latitude = 30.038499999999999,
+                            Longitude = 31.2121,
+                            Name = "Dokki"
                         },
                         new
                         {
-                            Id = 49,
-                            Latitude = 30.091000000000001,
-                            Longitude = 31.2469,
-                            Name = "St. Teresa"
+                            Id = 9,
+                            Latitude = 30.041899999999998,
+                            Longitude = 31.224900000000002,
+                            Name = "Opera"
                         },
                         new
                         {
-                            Id = 50,
-                            Latitude = 30.100899999999999,
-                            Longitude = 31.247499999999999,
-                            Name = "Khalafawy"
-                        },
-                        new
-                        {
-                            Id = 51,
-                            Latitude = 30.106999999999999,
-                            Longitude = 31.249199999999998,
-                            Name = "Mezallat"
-                        },
-                        new
-                        {
-                            Id = 52,
-                            Latitude = 30.113299999999999,
-                            Longitude = 31.2486,
-                            Name = "Kolleyyet El-Zeraa"
-                        },
-                        new
-                        {
-                            Id = 53,
-                            Latitude = 30.122499999999999,
-                            Longitude = 31.244700000000002,
-                            Name = "Shubra El-Kheima"
-                        },
-                        new
-                        {
-                            Id = 54,
-                            Latitude = 30.1465,
-                            Longitude = 31.421700000000001,
-                            Name = "Adly Mansour"
-                        },
-                        new
-                        {
-                            Id = 55,
-                            Latitude = 30.135999999999999,
-                            Longitude = 31.4055,
-                            Name = "El Hayestep"
-                        },
-                        new
-                        {
-                            Id = 56,
-                            Latitude = 30.130199999999999,
-                            Longitude = 31.3855,
-                            Name = "Omar Ibn El-Khattab"
-                        },
-                        new
-                        {
-                            Id = 57,
-                            Latitude = 30.1265,
-                            Longitude = 31.3705,
-                            Name = "Qobaa"
-                        },
-                        new
-                        {
-                            Id = 58,
-                            Latitude = 30.122499999999999,
-                            Longitude = 31.355499999999999,
-                            Name = "Hesham Barakat"
-                        },
-                        new
-                        {
-                            Id = 59,
-                            Latitude = 30.118500000000001,
-                            Longitude = 31.345500000000001,
-                            Name = "El-Nozha"
-                        },
-                        new
-                        {
-                            Id = 60,
-                            Latitude = 30.1145,
-                            Longitude = 31.3355,
-                            Name = "Nadi El-Shams"
-                        },
-                        new
-                        {
-                            Id = 61,
-                            Latitude = 30.109500000000001,
-                            Longitude = 31.325500000000002,
-                            Name = "Alf Maskan"
-                        },
-                        new
-                        {
-                            Id = 62,
-                            Latitude = 30.1005,
-                            Longitude = 31.320499999999999,
-                            Name = "Heliopolis Square"
-                        },
-                        new
-                        {
-                            Id = 63,
-                            Latitude = 30.093499999999999,
-                            Longitude = 31.3155,
-                            Name = "Haroun"
-                        },
-                        new
-                        {
-                            Id = 64,
-                            Latitude = 30.0885,
-                            Longitude = 31.3125,
-                            Name = "Al-Ahram"
-                        },
-                        new
-                        {
-                            Id = 65,
-                            Latitude = 30.083500000000001,
-                            Longitude = 31.3095,
-                            Name = "Koleyet El-Banat"
-                        },
-                        new
-                        {
-                            Id = 66,
-                            Latitude = 30.073499999999999,
-                            Longitude = 31.3065,
-                            Name = "Stadium"
-                        },
-                        new
-                        {
-                            Id = 67,
-                            Latitude = 30.070499999999999,
-                            Longitude = 31.298500000000001,
-                            Name = "Fair Zone"
-                        },
-                        new
-                        {
-                            Id = 68,
+                            Id = 10,
                             Latitude = 30.073499999999999,
                             Longitude = 31.283100000000001,
                             Name = "Abbassia"
                         },
                         new
                         {
-                            Id = 69,
-                            Latitude = 30.0655,
-                            Longitude = 31.275500000000001,
-                            Name = "Abdo Pasha"
+                            Id = 11,
+                            Latitude = 30.101500000000001,
+                            Longitude = 31.333100000000002,
+                            Name = "Haroun"
                         },
                         new
                         {
-                            Id = 70,
-                            Latitude = 30.060500000000001,
-                            Longitude = 31.265499999999999,
-                            Name = "El-Geish"
-                        },
-                        new
-                        {
-                            Id = 71,
-                            Latitude = 30.055499999999999,
-                            Longitude = 31.255500000000001,
-                            Name = "Bab El-Shaaria"
-                        },
-                        new
-                        {
-                            Id = 72,
-                            Latitude = 30.055099999999999,
-                            Longitude = 31.232500000000002,
-                            Name = "Maspero"
-                        },
-                        new
-                        {
-                            Id = 73,
-                            Latitude = 30.0625,
-                            Longitude = 31.2225,
-                            Name = "Safaa Hegazy"
-                        },
-                        new
-                        {
-                            Id = 74,
-                            Latitude = 30.0685,
-                            Longitude = 31.212499999999999,
-                            Name = "Kit Kat"
+                            Id = 12,
+                            Latitude = 30.152100000000001,
+                            Longitude = 31.3384,
+                            Name = "El Marg"
                         });
                 });
 

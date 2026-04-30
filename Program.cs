@@ -1,4 +1,4 @@
-﻿/// Ghanem Branch
+﻿
 using Arrive.BusApi.Data;
 
 using Microsoft.EntityFrameworkCore;

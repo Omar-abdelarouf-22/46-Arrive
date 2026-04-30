@@ -13,6 +13,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     public DbSet<RouteStation> RouteStations => Set<RouteStation>();
 
+    public DbSet<MetroStation> MetroStations => Set<MetroStation>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Bus>(entity =>
@@ -69,6 +71,88 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.Entity<Bus>().HasData(
             new Bus { Id = 1, Number = "80" },
             new Bus { Id = 2, Number = "90" });
+
+        modelBuilder.Entity<MetroStation>().HasData(
+            // Line 1
+            new MetroStation { Id = 1, Name = "Helwan", Latitude = 29.8491, Longitude = 31.3341 },
+            new MetroStation { Id = 2, Name = "Ain Helwan", Latitude = 29.8641, Longitude = 31.3323 },
+            new MetroStation { Id = 3, Name = "Helwan University", Latitude = 29.8706, Longitude = 31.3283 },
+            new MetroStation { Id = 4, Name = "Wadi Hof", Latitude = 29.8821, Longitude = 31.3218 },
+            new MetroStation { Id = 5, Name = "Hadayek Helwan", Latitude = 29.8972, Longitude = 31.3129 },
+            new MetroStation { Id = 6, Name = "El-Maasara", Latitude = 29.9079, Longitude = 31.3039 },
+            new MetroStation { Id = 7, Name = "Tora El-Asmant", Latitude = 29.9248, Longitude = 31.2917 },
+            new MetroStation { Id = 8, Name = "Kozzika", Latitude = 29.9366, Longitude = 31.2829 },
+            new MetroStation { Id = 9, Name = "Tora El-Balad", Latitude = 29.9482, Longitude = 31.2750 },
+            new MetroStation { Id = 10, Name = "Sakanat El-Maadi", Latitude = 29.9546, Longitude = 31.2657 },
+            new MetroStation { Id = 11, Name = "Maadi", Latitude = 29.9602, Longitude = 31.2585 },
+            new MetroStation { Id = 12, Name = "Hadayek El-Maadi", Latitude = 29.9721, Longitude = 31.2505 },
+            new MetroStation { Id = 13, Name = "Dar El-Salam", Latitude = 29.9822, Longitude = 31.2430 },
+            new MetroStation { Id = 14, Name = "El-Zahraa", Latitude = 29.9959, Longitude = 31.2335 },
+            new MetroStation { Id = 15, Name = "Mar Girgis", Latitude = 30.0062, Longitude = 31.2300 },
+            new MetroStation { Id = 16, Name = "El-Malek El-Saleh", Latitude = 30.0175, Longitude = 31.2291 },
+            new MetroStation { Id = 17, Name = "Al-Sayeda Zeinab", Latitude = 30.0296, Longitude = 31.2332 },
+            new MetroStation { Id = 18, Name = "Saad Zaghloul", Latitude = 30.0357, Longitude = 31.2366 },
+            new MetroStation { Id = 19, Name = "Sadat", Latitude = 30.0444, Longitude = 31.2358 },
+            new MetroStation { Id = 20, Name = "Nasser", Latitude = 30.0535, Longitude = 31.2387 },
+            new MetroStation { Id = 21, Name = "Orabi", Latitude = 30.0579, Longitude = 31.2427 },
+            new MetroStation { Id = 22, Name = "Al-Shohadaa", Latitude = 30.0610, Longitude = 31.2460 },
+            new MetroStation { Id = 23, Name = "Ghamra", Latitude = 30.0664, Longitude = 31.2644 },
+            new MetroStation { Id = 24, Name = "El-Demerdash", Latitude = 30.0715, Longitude = 31.2727 },
+            new MetroStation { Id = 25, Name = "Manshiet El-Sadr", Latitude = 30.0759, Longitude = 31.2766 },
+            new MetroStation { Id = 26, Name = "Kobri El-Qobba", Latitude = 30.0818, Longitude = 31.2845 },
+            new MetroStation { Id = 27, Name = "Hammamat El-Qobba", Latitude = 30.0854, Longitude = 31.2905 },
+            new MetroStation { Id = 28, Name = "Saray El-Qobba", Latitude = 30.0898, Longitude = 31.2965 },
+            new MetroStation { Id = 29, Name = "Hadayek El-Zaitoun", Latitude = 30.0988, Longitude = 31.3069 },
+            new MetroStation { Id = 30, Name = "Helmeyet El-Zaitoun", Latitude = 30.1044, Longitude = 31.3125 },
+            new MetroStation { Id = 31, Name = "El-Matareyya", Latitude = 30.1147, Longitude = 31.3181 },
+            new MetroStation { Id = 32, Name = "Ain Shams", Latitude = 30.1243, Longitude = 31.3235 },
+            new MetroStation { Id = 33, Name = "Ezbet El-Nakhl", Latitude = 30.1387, Longitude = 31.3283 },
+            new MetroStation { Id = 34, Name = "El-Marg", Latitude = 30.1521, Longitude = 31.3384 },
+            new MetroStation { Id = 35, Name = "New El-Marg", Latitude = 30.1633, Longitude = 31.3364 },
+            
+            // Line 2
+            new MetroStation { Id = 36, Name = "El-Mounib", Latitude = 29.9806, Longitude = 31.2114 },
+            new MetroStation { Id = 37, Name = "Sakiat Mekki", Latitude = 29.9958, Longitude = 31.2098 },
+            new MetroStation { Id = 38, Name = "Omm El-Misryeen", Latitude = 30.0051, Longitude = 31.2089 },
+            new MetroStation { Id = 39, Name = "Giza", Latitude = 30.0137, Longitude = 31.2079 },
+            new MetroStation { Id = 40, Name = "Faisal", Latitude = 30.0210, Longitude = 31.2045 },
+            new MetroStation { Id = 41, Name = "Cairo University", Latitude = 30.0260, Longitude = 31.2013 },
+            new MetroStation { Id = 42, Name = "El-Bohouth", Latitude = 30.0355, Longitude = 31.2001 },
+            new MetroStation { Id = 43, Name = "Dokki", Latitude = 30.0385, Longitude = 31.2121 },
+            new MetroStation { Id = 44, Name = "Opera", Latitude = 30.0419, Longitude = 31.2249 },
+            new MetroStation { Id = 45, Name = "Mohamed Naguib", Latitude = 30.0443, Longitude = 31.2443 },
+            new MetroStation { Id = 46, Name = "Attaba", Latitude = 30.0523, Longitude = 31.2468 },
+            new MetroStation { Id = 47, Name = "Massara", Latitude = 30.0709, Longitude = 31.2452 },
+            new MetroStation { Id = 48, Name = "Rod El-Farag", Latitude = 30.0814, Longitude = 31.2464 },
+            new MetroStation { Id = 49, Name = "St. Teresa", Latitude = 30.0910, Longitude = 31.2469 },
+            new MetroStation { Id = 50, Name = "Khalafawy", Latitude = 30.1009, Longitude = 31.2475 },
+            new MetroStation { Id = 51, Name = "Mezallat", Latitude = 30.1070, Longitude = 31.2492 },
+            new MetroStation { Id = 52, Name = "Kolleyyet El-Zeraa", Latitude = 30.1133, Longitude = 31.2486 },
+            new MetroStation { Id = 53, Name = "Shubra El-Kheima", Latitude = 30.1225, Longitude = 31.2447 },
+
+            // Line 3
+            new MetroStation { Id = 54, Name = "Adly Mansour", Latitude = 30.1465, Longitude = 31.4217 },
+            new MetroStation { Id = 55, Name = "El Hayestep", Latitude = 30.1360, Longitude = 31.4055 },
+            new MetroStation { Id = 56, Name = "Omar Ibn El-Khattab", Latitude = 30.1302, Longitude = 31.3855 },
+            new MetroStation { Id = 57, Name = "Qobaa", Latitude = 30.1265, Longitude = 31.3705 },
+            new MetroStation { Id = 58, Name = "Hesham Barakat", Latitude = 30.1225, Longitude = 31.3555 },
+            new MetroStation { Id = 59, Name = "El-Nozha", Latitude = 30.1185, Longitude = 31.3455 },
+            new MetroStation { Id = 60, Name = "Nadi El-Shams", Latitude = 30.1145, Longitude = 31.3355 },
+            new MetroStation { Id = 61, Name = "Alf Maskan", Latitude = 30.1095, Longitude = 31.3255 },
+            new MetroStation { Id = 62, Name = "Heliopolis Square", Latitude = 30.1005, Longitude = 31.3205 },
+            new MetroStation { Id = 63, Name = "Haroun", Latitude = 30.0935, Longitude = 31.3155 },
+            new MetroStation { Id = 64, Name = "Al-Ahram", Latitude = 30.0885, Longitude = 31.3125 },
+            new MetroStation { Id = 65, Name = "Koleyet El-Banat", Latitude = 30.0835, Longitude = 31.3095 },
+            new MetroStation { Id = 66, Name = "Stadium", Latitude = 30.0735, Longitude = 31.3065 },
+            new MetroStation { Id = 67, Name = "Fair Zone", Latitude = 30.0705, Longitude = 31.2985 },
+            new MetroStation { Id = 68, Name = "Abbassia", Latitude = 30.0735, Longitude = 31.2831 },
+            new MetroStation { Id = 69, Name = "Abdo Pasha", Latitude = 30.0655, Longitude = 31.2755 },
+            new MetroStation { Id = 70, Name = "El-Geish", Latitude = 30.0605, Longitude = 31.2655 },
+            new MetroStation { Id = 71, Name = "Bab El-Shaaria", Latitude = 30.0555, Longitude = 31.2555 },
+            new MetroStation { Id = 72, Name = "Maspero", Latitude = 30.0551, Longitude = 31.2325 },
+            new MetroStation { Id = 73, Name = "Safaa Hegazy", Latitude = 30.0625, Longitude = 31.2225 },
+            new MetroStation { Id = 74, Name = "Kit Kat", Latitude = 30.0685, Longitude = 31.2125 }
+        );
 
         modelBuilder.Entity<Station>().HasData(
             new Station { Id = 1, Name = "مساكن اسكو", Latitude = 30.1369, Longitude = 31.3217 },
