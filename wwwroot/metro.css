@@ -1,0 +1,322 @@
+:root {
+  --bg-start: #07101f;
+  --bg-mid: #050911;
+  --bg-end: #020305;
+  --text-main: #f4f8ff;
+  --text-soft: #9dacd0;
+  --glass: rgba(255, 255, 255, 0.08);
+  --glass-soft: rgba(255, 255, 255, 0.07);
+  --border: rgba(255, 255, 255, 0.15);
+  --shadow: 0 20px 44px rgba(2, 10, 26, 0.45);
+  --accent: #6aa8ff;
+  --accent-2: #72f0ff;
+  --station: #79b8ff;
+  --nearest: #ffca5f;
+  --user: #70f5af;
+  --transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: var(--text-main);
+  background: linear-gradient(160deg, var(--bg-start), var(--bg-mid) 45%, var(--bg-end));
+  overflow-x: hidden;
+}
+
+.background-overlay,
+.metro-pattern {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+.background-overlay {
+  z-index: 0;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(38, 93, 191, 0.24), transparent 35%),
+    radial-gradient(circle at 85% 75%, rgba(15, 151, 182, 0.22), transparent 36%);
+}
+
+.metro-pattern {
+  z-index: 1;
+  opacity: 0.12;
+  background-image:
+    linear-gradient(90deg, transparent 0 33%, rgba(114, 240, 255, 0.2) 33% 34%, transparent 34% 100%),
+    linear-gradient(0deg, transparent 0 46%, rgba(106, 168, 255, 0.18) 46% 47%, transparent 47% 100%);
+  background-size: 180px 180px, 180px 180px;
+}
+
+.page {
+  position: relative;
+  z-index: 2;
+  width: min(1120px, 92%);
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 1.8rem 0 2.2rem;
+}
+
+.glass,
+.glass-soft {
+  border: 1px solid var(--border);
+  background: var(--glass);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: var(--shadow);
+  border-radius: 24px;
+}
+
+.glass-soft {
+  background: var(--glass-soft);
+  border-radius: 16px;
+  box-shadow: 0 14px 30px rgba(2, 10, 26, 0.3);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 1.2rem;
+}
+
+.logo {
+  width: 86px;
+  height: 86px;
+  border-radius: 24px;
+  object-fit: cover;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.34);
+}
+
+.header h1 {
+  margin: 0.8rem 0 0.25rem;
+  font-size: clamp(2rem, 5vw, 3rem);
+  letter-spacing: 0.12em;
+}
+
+.header p {
+  margin: 0;
+  color: var(--text-soft);
+}
+
+.search-panel {
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.input-wrap {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  top: 50%;
+  left: 0.9rem;
+  transform: translateY(-50%);
+  opacity: 0.88;
+}
+
+.input-wrap input {
+  width: 100%;
+  height: 52px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(8, 18, 44, 0.48);
+  color: var(--text-main);
+  padding: 0 0.95rem 0 2.7rem;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+
+.input-wrap input::placeholder {
+  color: #a8b8de;
+}
+
+.input-wrap input:focus {
+  border-color: rgba(114, 240, 255, 0.95);
+  box-shadow: 0 0 0 4px rgba(106, 168, 255, 0.24);
+  transform: translateY(-1px);
+}
+
+.actions {
+  margin-top: 0.85rem;
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  border: 1px solid transparent;
+  border-radius: 13px;
+  height: 46px;
+  padding: 0 1rem;
+  color: var(--text-main);
+  cursor: pointer;
+  font-weight: 700;
+  transition: transform var(--transition), box-shadow var(--transition), filter var(--transition), border-color var(--transition);
+}
+
+.btn.ghost {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn.primary {
+  background: linear-gradient(120deg, var(--accent), var(--accent-2));
+  color: #08162c;
+}
+
+.btn:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 10px 22px rgba(7, 19, 40, 0.35);
+}
+
+.btn:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.status-text {
+  min-height: 1.2rem;
+  margin: 0.65rem 0 0;
+  color: var(--text-soft);
+  font-size: 0.9rem;
+}
+
+.loading-bar {
+  width: 0%;
+  height: 3px;
+  margin-top: 0.55rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  opacity: 0;
+  transition: width 0.45s ease, opacity 0.25s ease;
+}
+
+.loading-bar.is-active {
+  width: 100%;
+  opacity: 1;
+  animation: pulseLoad 1.1s ease-in-out infinite alternate;
+}
+
+.map-panel {
+  padding: 0.8rem;
+}
+
+#map {
+  width: 100%;
+  height: min(58vh, 500px);
+  min-height: 320px;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.legend {
+  margin-top: 0.75rem;
+  padding: 0.65rem 0.8rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 0.86rem;
+  color: var(--text-soft);
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 0.4rem;
+}
+
+.station-dot { background: var(--station); }
+.nearest-dot { background: var(--nearest); }
+.user-dot { background: var(--user); }
+
+.result-wrap {
+  margin-top: 1rem;
+}
+
+.result-card {
+  padding: 1rem;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition), opacity var(--transition);
+}
+
+.result-card.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.result-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(114, 240, 255, 0.5);
+  box-shadow: 0 16px 34px rgba(1, 11, 26, 0.42);
+}
+
+.result-card h2 {
+  margin: 0 0 0.45rem;
+  font-size: 1.1rem;
+  color: #cfe8ff;
+}
+
+.result-card p {
+  margin: 0.3rem 0;
+}
+
+.distance {
+  color: var(--text-soft);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: revealIn 0.7s ease forwards;
+}
+
+.search-reveal { animation-delay: 0.14s; }
+.map-reveal { animation-delay: 0.24s; }
+.result-reveal { animation-delay: 0.34s; }
+
+@keyframes revealIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseLoad {
+  from { filter: brightness(0.9); }
+  to { filter: brightness(1.25); }
+}
+
+@media (max-width: 850px) {
+  .actions {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    width: min(1100px, 94%);
+  }
+
+  .header {
+    margin-bottom: 1rem;
+  }
+
+  #map {
+    height: 46vh;
+    min-height: 280px;
+  }
+}

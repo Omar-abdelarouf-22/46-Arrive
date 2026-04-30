@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARRIVE | Nearest Metro Station</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&display=swap" rel="stylesheet">
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  >
+  <link rel="stylesheet" href="metro.css">
+</head>
+<body>
+  <div class="background-overlay" aria-hidden="true"></div>
+  <div class="metro-pattern" aria-hidden="true"></div>
+
+  <main class="page">
+    <header class="header reveal header-reveal">
+      <img class="logo" src="arrive-logo.png" alt="ARRIVE logo">
+      <h1>ARRIVE</h1>
+      <p>Find your nearest metro station</p>
+    </header>
+
+    <section class="search-panel glass reveal search-reveal" aria-label="Search nearest metro station">
+      <div class="input-wrap">
+        <span class="input-icon" aria-hidden="true">📍</span>
+        <input id="locationInput" type="text" placeholder="Enter your location or use current location" autocomplete="off">
+      </div>
+      <div class="actions">
+        <button id="useLocationBtn" class="btn ghost" type="button">Use My Location</button>
+        <button id="findNearestBtn" class="btn primary" type="button">Find Nearest Station</button>
+      </div>
+      <p id="statusText" class="status-text" role="status" aria-live="polite"></p>
+      <div id="loadingBar" class="loading-bar" aria-hidden="true"></div>
+    </section>
+
+    <section class="map-panel glass reveal map-reveal">
+      <div id="map" aria-label="Metro map"></div>
+      <div class="legend glass-soft" aria-label="Map legend">
+        <span><i class="dot station-dot"></i> Metro station</span>
+        <span><i class="dot nearest-dot"></i> Nearest station</span>
+        <span><i class="dot user-dot"></i> Your location</span>
+      </div>
+    </section>
+
+    <section class="result-wrap reveal result-reveal" aria-label="Nearest station result">
+      <article id="resultCard" class="result-card glass-soft">
+        <h2>Nearest Station</h2>
+        <p id="stationName">Waiting for location...</p>
+        <p id="stationDistance" class="distance">Distance: -- km</p>
+      </article>
+    </section>
+  </main>
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+  <script src="metro.js"></script>
+</body>
+</html>

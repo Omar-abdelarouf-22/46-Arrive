@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARRIVE | Bus Route</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  >
+  <link rel="stylesheet" href="bus.css">
+</head>
+<body>
+  <div class="background-glow glow-1" aria-hidden="true"></div>
+  <div class="background-glow glow-2" aria-hidden="true"></div>
+
+  <main class="page shell-enter">
+    <header class="header">
+      <img class="logo" src="arrive-logo.png" alt="ARRIVE logo">
+      <h1>ARRIVE</h1>
+      <p class="feature-title">How to arrive with bus</p>
+    </header>
+
+    <section class="search-panel glass-card" aria-label="Bus route search">
+      <div class="field-wrap">
+        <span class="field-icon" aria-hidden="true">📍</span>
+        <input id="fromInput" type="text" placeholder="FROM WHERE?" autocomplete="off" list="stationOptions">
+      </div>
+
+      <div class="field-wrap">
+        <span class="field-icon" aria-hidden="true">📍</span>
+        <input id="toInput" type="text" placeholder="TO WHERE?" autocomplete="off" list="stationOptions">
+      </div>
+
+      <datalist id="stationOptions"></datalist>
+
+      <button id="findRouteBtn" class="find-btn" type="button">Find Route</button>
+      <p id="statusText" class="status-text" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="map-panel glass-card">
+      <div id="map" aria-label="Interactive bus map"></div>
+    </section>
+
+    <section class="results-panel" aria-label="Bus route results">
+      <h2>Suggested Bus Route</h2>
+      <div id="resultCards" class="result-cards"></div>
+    </section>
+  </main>
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+  <script src="bus.js"></script>
+</body>
+</html>

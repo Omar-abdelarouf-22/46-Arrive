@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARRIVE | Smart Mobility</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="background-overlay" aria-hidden="true"></div>
+  <div class="background-ambient" aria-hidden="true">
+    <span class="ambient ambient-1"></span>
+    <span class="ambient ambient-2"></span>
+  </div>
+
+  <main class="page">
+    <header class="hero">
+      <img class="logo" src="arrive-logo.png" alt="ARRIVE logo">
+      <h1 class="brand-title" aria-label="ARRIVE">
+        <span class="letter">A</span>
+        <span class="letter">R</span>
+        <span class="letter">R</span>
+        <span class="letter">I</span>
+        <span class="letter">V</span>
+        <span class="letter">E</span>
+      </h1>
+      <p class="subtitle">Smart mobility, reimagined.</p>
+    </header>
+
+    <section class="cards" aria-label="ARRIVE mobility choices">
+      <button class="card" type="button" data-target="bus.html">
+        <span class="icon" aria-hidden="true">🚌</span>
+        <h2>How to arrive with bus</h2>
+        <p>Plan your route and choose the best bus option.</p>
+      </button>
+
+      <button class="card" type="button" data-target="metro.html">
+        <span class="icon" aria-hidden="true">🚇</span>
+        <h2>Nearest metro station</h2>
+        <p>Find the closest station and metro-friendly directions.</p>
+      </button>
+
+      <button class="card" type="button" data-target="cost.html">
+        <span class="icon" aria-hidden="true">🚗</span>
+        <h2>Cost for smart mobility</h2>
+        <p>Compare smart ride costs with Uber, Didi, and inDrive.</p>
+      </button>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
