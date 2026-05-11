@@ -1,3 +1,4 @@
+--GitHup Link-- https://github.com/Omar-abdelarouf-22/46-Arrive.git --
 # 📍 ARRIVE
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
@@ -20,9 +21,10 @@ ARRIVE is a smart mobility web application that helps users find bus routes, det
 - 🌐 **Single-host setup** where ASP.NET Core serves both API controllers and static frontend pages
 
 ## 📸 Screenshots
-- <!-- Add screenshot here -->
-- <!-- Add screenshot here -->
-- <!-- Add screenshot here -->
+-<img width="3822" height="1794" alt="image" src="https://github.com/user-attachments/assets/e3455c81-cc39-4153-b69b-4dd79bc18f69" />
+- <img width="1831" height="1587" alt="image" src="https://github.com/user-attachments/assets/ec1f5f8e-d1e0-415b-b8ce-4d47bb3c24e1" />
+- <img width="1916" height="1807" alt="image" src="https://github.com/user-attachments/assets/433a7425-b553-4d13-aaaf-b5a0cde5ae10" />
+-<img width="2066" height="1702" alt="image" src="https://github.com/user-attachments/assets/04be75c5-bf2d-49fa-a418-f9fffa9a0572" />
 
 ## 🏗️ Architecture
 ARRIVE is organized into:
