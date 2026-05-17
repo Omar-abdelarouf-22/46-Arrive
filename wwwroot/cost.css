@@ -389,3 +389,78 @@ body {
     min-height: 270px;
   }
 }
+
+.use-location-btn {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: transform var(--transition), opacity var(--transition);
+}
+.use-location-btn:hover {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.autocomplete-wrapper {
+  position: relative;
+}
+.suggestions-list {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  margin: 0;
+  padding: 0.4rem 0;
+  list-style: none;
+  max-height: 250px;
+  overflow-y: auto;
+  z-index: 1000;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(73, 210, 255, 0.1);
+}
+
+.suggestions-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.suggestions-list::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 10px 0;
+}
+
+.suggestions-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+.suggestions-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.suggestions-list li {
+  padding: 0.9rem 1.2rem;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.95rem;
+  color: #f3f6ff;
+  font-weight: 500;
+  transition: background var(--transition), color var(--transition), padding-left var(--transition);
+}
+.suggestions-list li:hover {
+  background: rgba(73, 210, 255, 0.1);
+  color: #72f0ff;
+  padding-left: 1.6rem;
+}
+.suggestions-list li:last-child {
+  border-bottom: none;
+}

@@ -7,10 +7,21 @@ const resultCard = document.getElementById("resultCard");
 const stationNameText = document.getElementById("stationName");
 const stationDistanceText = document.getElementById("stationDistance");
 
-const map = L.map("map", { zoomControl: true }).setView([30.0444, 31.2357], 11);
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+const egyptBounds = L.latLngBounds(
+  L.latLng(21.5, 24.5), // South-West
+  L.latLng(32.0, 37.0)  // North-East
+);
+
+const map = L.map("map", { 
+  zoomControl: true,
+  maxBounds: egyptBounds,
+  maxBoundsViscosity: 1.0,
+  minZoom: 6
+}).setView([30.0444, 31.2357], 11);
+L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
   maxZoom: 19,
-  attribution: "&copy; OpenStreetMap contributors"
+  minZoom: 6,
+  attribution: '&copy; <a href="https://carto.com/">CartoDB</a>'
 }).addTo(map);
 
 let userMarker = null;
@@ -23,7 +34,8 @@ const stationLayer = L.layerGroup().addTo(map);
 
 async function getMetroStations() {
   try {
-    const response = await fetch("/api/metrostations");
+    // Calling the ASP.NET Core Backend Localhost explicitly
+    const response = await fetch("http://localhost:5000/api/metrostations");
     if (!response.ok) {
       throw new Error("Could not fetch metro stations");
     }
@@ -209,6 +221,9 @@ async function handleFindNearestStation() {
 
   try {
     const stations = await getMetroStations();
+    if (!stations || stations.length === 0) {
+      throw new Error("No stations available. Is the backend server running?");
+    }
     renderStations(stations);
 
     let userCoords = currentUserCoords;
@@ -219,6 +234,9 @@ async function handleFindNearestStation() {
 
     drawUserMarker(userCoords);
     const { station, distanceKm } = findNearestStation(userCoords, stations);
+    if (!station) {
+      throw new Error("Could not determine the nearest station.");
+    }
     highlightNearestStation(station, distanceKm, userCoords);
     setStatus("Nearest station found.");
   } catch (error) {
@@ -244,4 +262,166 @@ locationInput.addEventListener("input", () => {
   const stations = await getMetroStations();
   renderStations(stations);
   setStatus("Enter a location or use your current location.");
+  
+  // Populate Ticket Calculator Dropdowns
+  if (stations && stations.length > 0) {
+    const sortedStations = [...stations].sort((a, b) => a.name.localeCompare(b.name));
+    
+    setupAutocomplete(
+      document.getElementById("startStationInput"),
+      document.getElementById("startStationId"),
+      document.getElementById("startDropdown"),
+      sortedStations
+    );
+
+    setupAutocomplete(
+      document.getElementById("endStationInput"),
+      document.getElementById("endStationId"),
+      document.getElementById("endDropdown"),
+      sortedStations
+    );
+  }
 })();
+
+function setupAutocomplete(inputEl, idEl, dropdownEl, stationsData) {
+  if (!inputEl || !dropdownEl) return;
+  
+  inputEl.addEventListener("input", () => {
+    const val = inputEl.value.toLowerCase();
+    dropdownEl.innerHTML = "";
+    if (val !== inputEl.value) {
+      // Don't clear id if we just selected an item
+      idEl.value = ""; 
+    }
+    
+    let matches = stationsData;
+    if (val) {
+      matches = stationsData.filter(s => s.name.toLowerCase().includes(val));
+    }
+    
+    if (matches.length === 0) {
+      dropdownEl.classList.remove("active");
+      return;
+    }
+    
+    matches.slice(0, 100).forEach(match => {
+      const div = document.createElement("div");
+      div.className = "autocomplete-item";
+      div.textContent = match.name;
+      div.addEventListener("click", () => {
+        inputEl.value = match.name;
+        idEl.value = match.id;
+        dropdownEl.classList.remove("active");
+      });
+      dropdownEl.appendChild(div);
+    });
+    
+    dropdownEl.classList.add("active");
+  });
+
+  inputEl.addEventListener("focus", () => {
+    inputEl.dispatchEvent(new Event('input'));
+  });
+
+  document.addEventListener("click", (e) => {
+    if (e.target !== inputEl && e.target !== dropdownEl && !dropdownEl.contains(e.target)) {
+      dropdownEl.classList.remove("active");
+    }
+  });
+}
+
+// === Ticket Calculator Logic ===
+const calculateTicketBtn = document.getElementById("calculateTicketBtn");
+const startStationIdEl = document.getElementById("startStationId");
+const endStationIdEl = document.getElementById("endStationId");
+const ticketResult = document.getElementById("ticketResult");
+const ticketStops = document.getElementById("ticketStops");
+const ticketPrice = document.getElementById("ticketPrice");
+
+calculateTicketBtn.addEventListener("click", async () => {
+  const fromId = startStationIdEl.value;
+  const toId = endStationIdEl.value;
+  
+  if (!fromId || !toId) {
+    alert("Please select both Start and End stations.");
+    return;
+  }
+  
+  if (fromId === toId) {
+    alert("Start and End stations cannot be the same.");
+    return;
+  }
+  
+  calculateTicketBtn.disabled = true;
+  calculateTicketBtn.textContent = "Calculating...";
+  
+  try {
+    const response = await fetch(`http://localhost:5000/api/metrostations/route?fromId=${fromId}&toId=${toId}`);
+    
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(`Server Error (${response.status}): ${errText}`);
+    }
+    
+    const result = await response.json();
+    
+    // Check if the property names are capitalized (Newtonsoft.Json might do this depending on settings)
+    const count = result.stationCount || result.StationCount;
+    const price = result.priceEgp || result.PriceEgp;
+    const path = result.path || result.Path;
+    
+    if (count === undefined || price === undefined) {
+      throw new Error("Invalid data format received from the server.");
+    }
+    
+    ticketStops.textContent = `Number of stops: ${count} stations`;
+    ticketPrice.textContent = `${price} EGP`;
+    ticketResult.style.display = "block";
+    
+    // Force a reflow so the transition works, then set opacity and transform
+    ticketResult.offsetHeight;
+    ticketResult.style.opacity = "1";
+    ticketResult.style.transform = "translateY(0)";
+    
+    // Highlight the path on the map
+    if (stationLinkLines) map.removeLayer(stationLinkLines);
+    if (nearestLine) map.removeLayer(nearestLine);
+    if (nearestStationHighlight) map.removeLayer(nearestStationHighlight);
+    
+    if (typeof L.polyline.antPath === 'function') {
+      stationLinkLines = L.polyline.antPath(
+        path.map((station) => [station.lat || station.Lat, station.lng || station.Lng]),
+        {
+          delay: 400,
+          dashArray: [20, 20],
+          weight: 6,
+          color: "#000000",
+          pulseColor: "#ffca5f",
+          paused: false,
+          reverse: false,
+          opacity: 0.8
+        }
+      ).addTo(map);
+    } else {
+      stationLinkLines = L.polyline(
+        path.map((station) => [station.lat || station.Lat, station.lng || station.Lng]),
+        { color: "#ffca5f", weight: 5, opacity: 0.9 }
+      ).addTo(map);
+    }
+    
+    map.fitBounds(stationLinkLines.getBounds(), { padding: [40, 40] });
+    
+  } catch (error) {
+    console.error("Ticket Calculation Error:", error);
+    ticketStops.textContent = "Error calculating route";
+    ticketPrice.textContent = "-- EGP";
+    ticketResult.style.display = "block";
+    ticketResult.offsetHeight;
+    ticketResult.style.opacity = "1";
+    ticketResult.style.transform = "translateY(0)";
+    alert("Error: " + error.message);
+  } finally {
+    calculateTicketBtn.disabled = false;
+    calculateTicketBtn.textContent = "Calculate Ticket";
+  }
+});

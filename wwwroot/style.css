@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --bg-start: #07101f;
   --bg-mid: #050911;
   --bg-end: #020305;
@@ -25,7 +25,7 @@ body {
 
 body {
   margin: 0;
-  font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-family: "Molle", cursive;
   color: var(--text-main);
   background: linear-gradient(155deg, var(--bg-start) 0%, var(--bg-mid) 45%, var(--bg-end) 100%);
   overflow-x: hidden;
@@ -134,6 +134,8 @@ body {
   color: transparent;
   text-shadow: 0 0 18px rgba(88, 184, 255, 0.2);
   will-change: transform, opacity, filter;
+  padding: 0.1em;
+  margin: -0.1em;
 }
 
 .subtitle {
@@ -175,6 +177,18 @@ body {
 .card .icon {
   font-size: 2.35rem;
   line-height: 1;
+  margin-bottom: 0.5rem;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.card .icon svg {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.4s ease;
+}
+
+.card:hover .icon svg {
+  transform: scale(1.15) translateY(-4px);
+  filter: drop-shadow(0 8px 16px rgba(114, 240, 255, 0.3));
 }
 
 .card h2 {
@@ -202,12 +216,14 @@ body {
   0% {
     background-position: 0% 50%;
   }
+
   100% {
     background-position: 100% 50%;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .logo,
   .letter,
   .background-watermark,

@@ -6,10 +6,22 @@ const distanceText = document.getElementById("distanceText");
 const loadingState = document.getElementById("loadingState");
 const resultCards = document.getElementById("resultCards");
 
-const map = L.map("map", { zoomControl: true }).setView([30.0444, 31.2357], 11);
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+const egyptBounds = L.latLngBounds(
+  L.latLng(21.5, 24.5), // South-West
+  L.latLng(32.0, 37.0)  // North-East
+);
+
+const map = L.map("map", { 
+  zoomControl: true,
+  maxBounds: egyptBounds,
+  maxBoundsViscosity: 1.0,
+  minZoom: 6
+}).setView([30.0444, 31.2357], 11);
+
+L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
   maxZoom: 19,
-  attribution: "&copy; OpenStreetMap contributors"
+  minZoom: 6,
+  attribution: '&copy; <a href="https://carto.com/">CartoDB</a>'
 }).addTo(map);
 
 let fromMarker = null;
@@ -87,27 +99,48 @@ function drawRoute(fromCoords, toCoords, fromLabel, toLabel) {
   map.fitBounds(routeLine.getBounds(), { padding: [45, 45] });
 }
 
-// Backend-ready wrapper: replace with API call later.
+// Backend API wrapper
 async function calculateTrip(from, to) {
   const [fromCoords, toCoords] = await Promise.all([geocodePlace(from), geocodePlace(to)]);
-  const distanceKm = haversineKm(fromCoords[0], fromCoords[1], toCoords[0], toCoords[1]);
+  
+  // Call the new C# Backend Pricing Engine
+  const response = await fetch("http://localhost:5000/api/ride-estimations/calculate", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      FromLat: fromCoords[0],
+      FromLng: fromCoords[1],
+      ToLat: toCoords[0],
+      ToLng: toCoords[1]
+    })
+  });
 
+  if (!response.ok) {
+    throw new Error("Could not calculate pricing. Is backend server running?");
+  }
+
+  const result = await response.json();
+
+  // The backend returns keys matching the models: uber, diDi, inDrive
+  // We map them to lowercase for the frontend renderCards function
   const pricing = {
     uber: {
-      car: distanceKm * priceModels.uber.car,
-      moto: distanceKm * priceModels.uber.moto
+      car: result.pricing.uber.car,
+      moto: result.pricing.uber.moto
     },
     didi: {
-      car: distanceKm * priceModels.didi.car,
-      moto: distanceKm * priceModels.didi.moto
+      car: result.pricing.diDi.car,
+      moto: result.pricing.diDi.moto
     },
     indrive: {
-      car: distanceKm * priceModels.indrive.car,
-      moto: distanceKm * priceModels.indrive.moto
+      car: result.pricing.inDrive.car,
+      moto: result.pricing.inDrive.moto
     }
   };
 
-  return { fromCoords, toCoords, distanceKm, pricing };
+  return { fromCoords, toCoords, distanceKm: result.distanceKm, pricing };
 }
 
 function formatEgp(value) {
@@ -207,4 +240,98 @@ calculateBtn.addEventListener("click", onCalculateCost);
   input.addEventListener("keydown", (event) => {
     if (event.key === "Enter") onCalculateCost();
   });
+});
+
+// === New Features: My Location & Autocomplete ===
+
+const useLocationBtn = document.getElementById("useLocationBtn");
+const suggestionsList = document.getElementById("suggestionsList");
+
+// 1. My Location Feature
+useLocationBtn.addEventListener("click", () => {
+  if (!navigator.geolocation) {
+    setStatus("Geolocation is not supported by your browser.");
+    return;
+  }
+  
+  setStatus("Locating you...");
+  useLocationBtn.disabled = true;
+
+  navigator.geolocation.getCurrentPosition(
+    async (position) => {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      
+      try {
+        // Reverse geocoding to get a readable name (in Arabic)
+        const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=ar`);
+        const data = await res.json();
+        
+        // Put the readable address in the input, or fallback to coordinates
+        fromInput.value = data.display_name ? data.display_name.split(',')[0] + ', ' + data.display_name.split(',')[1] : `${lat.toFixed(5)}, ${lon.toFixed(5)}`;
+        setStatus("Location found!");
+      } catch (err) {
+        fromInput.value = `${lat.toFixed(5)}, ${lon.toFixed(5)}`;
+        setStatus("Location found!");
+      } finally {
+        useLocationBtn.disabled = false;
+      }
+    },
+    (error) => {
+      setStatus("Unable to retrieve your location.");
+      useLocationBtn.disabled = false;
+    }
+  );
+});
+
+// 2. Autocomplete Feature for "TO WHERE?"
+let debounceTimeout;
+
+toInput.addEventListener("input", (e) => {
+  const query = e.target.value.trim();
+  
+  clearTimeout(debounceTimeout);
+  
+  if (query.length < 3) {
+    suggestionsList.hidden = true;
+    return;
+  }
+
+  // Delay the API call so we don't spam the server while typing
+  debounceTimeout = setTimeout(async () => {
+    try {
+      // Add 'viewbox' and 'bounded' parameters to prioritize places in/around Cairo if needed,
+      // but a general search works fine. We restrict to Egypt (countrycodes=eg) and Arabic (accept-language=ar).
+      const endpoint = `https://nominatim.openstreetmap.org/search?format=json&limit=5&countrycodes=eg&accept-language=ar&q=${encodeURIComponent(query)}`;
+      const response = await fetch(endpoint, { headers: { Accept: "application/json" } });
+      const places = await response.json();
+
+      suggestionsList.innerHTML = "";
+      
+      if (places.length > 0) {
+        places.forEach(place => {
+          const li = document.createElement("li");
+          li.textContent = place.display_name;
+          li.addEventListener("click", () => {
+            toInput.value = place.display_name; // Set full or partial name
+            suggestionsList.hidden = true;
+          });
+          suggestionsList.appendChild(li);
+        });
+        suggestionsList.hidden = false;
+      } else {
+        suggestionsList.hidden = true;
+      }
+    } catch (error) {
+      console.error("Autocomplete error:", error);
+      suggestionsList.hidden = true;
+    }
+  }, 500); // 500ms delay
+});
+
+// Hide autocomplete when clicking outside
+document.addEventListener("click", (e) => {
+  if (e.target !== toInput && e.target !== suggestionsList) {
+    suggestionsList.hidden = true;
+  }
 });
